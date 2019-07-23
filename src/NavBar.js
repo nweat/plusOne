@@ -21,24 +21,31 @@ export default class NavBar extends React.Component {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
     return (
-      <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/"><span className="icon">date_range</span> <span>+ONE</span></NavbarBrand>
+      <header>
+        <Navbar color="dark" dark expand="md">
+          <NavbarBrand href="/">
+            <img id="logo" src="logo.png" alt=""/>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink href="/components/"><span className="icon">chat_bubble_outline</span></NavLink>
+            </NavItem>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <NavLink href="/components/"><span className="icon">notifications_none</span></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="/components/"><span className="icon">account_circle</span></NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -60,7 +67,7 @@ export default class NavBar extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
+      </header>
     )
   }
 }

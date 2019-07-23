@@ -1,6 +1,6 @@
 import React from 'react'
 import NavBar from './NavBar'
-import SideBar from './SideBar'
+import Calendar from "./components/Calendar";
 import './App.css'
 
 class App extends React.Component {
@@ -8,7 +8,9 @@ class App extends React.Component {
     return (
     <div>
       <NavBar/>
-      <SideBar/>
+      <main>
+       <Calendar />
+     </main>
     </div>
       )
   }
