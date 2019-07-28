@@ -1,23 +1,26 @@
-import React from "react";
-import dateFns from "date-fns";
-import { Button } from 'reactstrap';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
+import React from "react"
+import dateFns from "date-fns"
+import { Button } from 'reactstrap'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap'
+import i18n from '../../i18n/en'
 
 const calendarModes = ['Month', 'Week']
+const { NewCalendarModal } = i18n
 
 class Calendar extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       dropdownOpen: false,
       currentMonth: new Date(),
       currentWeek: new Date(),
       selectedDate: new Date(),
-      calendarMode: calendarModes[0]
+      calendarMode: calendarModes[0],
+      modal: false
     };
   }
 
@@ -27,11 +30,35 @@ class Calendar extends React.Component {
     }));
   }
 
+  toggleModal() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
 
+  openCalendarSetupModal() {
+    return (
+    <div>
+      <Modal isOpen={this.state.modal} toggle={this.toggleModal} className={this.props.className}>
+        <ModalHeader toggle={this.toggleModal}>{NewCalendarModal.modal_header}</ModalHeader>
+        <ModalBody>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.toggleModal}>Do Something</Button>{' '}
+          <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  );
+  }
 
   renderCalendarToolbar() {
     return (
         <div className="header rows flex-middle">
+          <span className="icon" onClick={this.toggleModal}>add_circle_outline</span>
+
+        {/*
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle outline color="secondary" size="sm" caret>
           View
@@ -41,6 +68,7 @@ class Calendar extends React.Component {
           <DropdownItem onClick = {() => this.setCalendarMode(calendarModes[1])}>Week</DropdownItem>
         </DropdownMenu>
       </Dropdown>
+      */}
         </div>
     )
   }
@@ -213,6 +241,8 @@ class Calendar extends React.Component {
     const { calendarMode } = this.state
     return (
       <div className="calendar">
+        {this.renderCalendarToolbar()}
+        {this.openCalendarSetupModal()}
         {calendarMode === calendarModes[0] && this.renderHeader()}
         {calendarMode === calendarModes[0] && this.renderDays()}
         {calendarMode === calendarModes[0] && this.renderCells()}
